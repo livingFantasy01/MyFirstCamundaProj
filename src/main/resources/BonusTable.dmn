@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="bonusDMNTable" name="Bonus Table" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.12.0">
+  <decision id="bonusTable" name=" Bonus Table">
+    <decisionTable id="DecisionTable_0jzobsx" hitPolicy="FIRST">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>department</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1s8e1ji">
+        <inputExpression id="LiteralExpression_1wtidsi" typeRef="integer">
+          <text>salary</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="bonus" typeRef="integer" biodi:width="192" />
+      <rule id="DecisionRule_1mwyyob">
+        <inputEntry id="UnaryTests_0h932zf">
+          <text>"HR","Admin"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1lexhm0">
+          <text>&lt;=10000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tua2z5">
+          <text>1000</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1myewi3">
+        <inputEntry id="UnaryTests_1a4ohcg">
+          <text>"HR","Admin"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kqsiml">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1bwmlri">
+          <text>500</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1y4o2lu">
+        <inputEntry id="UnaryTests_1983u78">
+          <text>"Legal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_02ozm7p">
+          <text>&lt;=5000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1wdmd44">
+          <text>1000</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1gl8is8">
+        <inputEntry id="UnaryTests_0j57y6q">
+          <text>"Legal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1d95ojv">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_079vw8d">
+          <text>500</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ha5ys8">
+        <inputEntry id="UnaryTests_17oowoa">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01etxap">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jncglu">
+          <text>200</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="bonusTable">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_05erlf5" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0">
+  <bpmn:process id="TasksExample" name="Tasks Example" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="name" label="Enter Name" type="string" />
+          <camunda:formField id="age" label="Enter Age" type="long" />
+          <camunda:formField id="salary" label="Enter Saray/Month" type="long" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_136mweq</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="Activity_01ffnd8" name="Print Customer Details" scriptFormat="groovy">
+      <bpmn:incoming>Flow_136mweq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rtsbg8</bpmn:outgoing>
+      <bpmn:script>println "Name :"+execution.getVariable("name");
+
+println "Age :"+execution.getVariable("age");
+
+println "Salary :"+execution.getVariable("salary");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Activity_0p7codw" name="Check Discount based on Age" camunda:delegateExpression="#{discountElegibilityDelegate}">
+      <bpmn:incoming>Flow_0rtsbg8</bpmn:incoming>
+      <bpmn:outgoing>Flow_0o9rfes</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_1p7doxt">
+      <bpmn:incoming>Flow_113o4py</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_0ny88qz" name="Loan request sent for approval" camunda:assignee="demo">
+      <bpmn:incoming>Flow_0o9rfes</bpmn:incoming>
+      <bpmn:outgoing>Flow_0l6id60</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Activity_0lmtci7" name="Print ApprovalStatus" scriptFormat="groovy">
+      <bpmn:incoming>Flow_0l6id60</bpmn:incoming>
+      <bpmn:outgoing>Flow_113o4py</bpmn:outgoing>
+      <bpmn:script>println " Print approval Status :"+execution.getVariable("approvalStatus");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_113o4py" sourceRef="Activity_0lmtci7" targetRef="Event_1p7doxt" />
+    <bpmn:sequenceFlow id="Flow_0l6id60" sourceRef="Activity_0ny88qz" targetRef="Activity_0lmtci7" />
+    <bpmn:sequenceFlow id="Flow_0o9rfes" sourceRef="Activity_0p7codw" targetRef="Activity_0ny88qz" />
+    <bpmn:sequenceFlow id="Flow_0rtsbg8" sourceRef="Activity_01ffnd8" targetRef="Activity_0p7codw" />
+    <bpmn:sequenceFlow id="Flow_136mweq" sourceRef="StartEvent_1" targetRef="Activity_01ffnd8" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="TasksExample">
+      <bpmndi:BPMNEdge id="Flow_136mweq_di" bpmnElement="Flow_136mweq">
+        <di:waypoint x="168" y="120" />
+        <di:waypoint x="210" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rtsbg8_di" bpmnElement="Flow_0rtsbg8">
+        <di:waypoint x="310" y="120" />
+        <di:waypoint x="350" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o9rfes_di" bpmnElement="Flow_0o9rfes">
+        <di:waypoint x="450" y="120" />
+        <di:waypoint x="490" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0l6id60_di" bpmnElement="Flow_0l6id60">
+        <di:waypoint x="590" y="120" />
+        <di:waypoint x="640" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_113o4py_di" bpmnElement="Flow_113o4py">
+        <di:waypoint x="740" y="120" />
+        <di:waypoint x="862" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="132" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qu535x_di" bpmnElement="Activity_01ffnd8">
+        <dc:Bounds x="210" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1t3av5h_di" bpmnElement="Activity_0p7codw">
+        <dc:Bounds x="350" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0voq4m3_di" bpmnElement="Activity_0ny88qz">
+        <dc:Bounds x="490" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_156kl3b_di" bpmnElement="Activity_0lmtci7">
+        <dc:Bounds x="640" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1p7doxt_di" bpmnElement="Event_1p7doxt">
+        <dc:Bounds x="862" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
