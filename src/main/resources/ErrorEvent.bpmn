@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_024xz13" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="errorEvents" name="Error Events" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Start">
+      <bpmn:outgoing>Flow_109timj</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_109timj" sourceRef="StartEvent_1" targetRef="Activity_1d6hyof" />
+    <bpmn:sequenceFlow id="Flow_0ltcg1f" sourceRef="Activity_1d6hyof" targetRef="Event_110fbbz" />
+    <bpmn:endEvent id="Event_110fbbz" name="throw Custom Error">
+      <bpmn:incoming>Flow_0ltcg1f</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1pv83bf" errorRef="Error_1wsthg8" />
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Activity_1d6hyof" name="Log throw message" scriptFormat="groovy">
+      <bpmn:incoming>Flow_109timj</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ltcg1f</bpmn:outgoing>
+      <bpmn:script>println "I am about to throw an error.."</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:subProcess id="Activity_18t51uk" triggeredByEvent="true">
+      <bpmn:startEvent id="Event_1tr99v5" name="Catch Error">
+        <bpmn:outgoing>Flow_1xszl14</bpmn:outgoing>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_1nuieuq" errorRef="Error_1wsthg8" camunda:errorCodeVariable="errorCode" camunda:errorMessageVariable="errorMsg" />
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1xszl14" sourceRef="Event_1tr99v5" targetRef="Activity_14vbhdq" />
+      <bpmn:endEvent id="Event_1nncojt" name="End">
+        <bpmn:incoming>Flow_00natt2</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_00natt2" sourceRef="Activity_14vbhdq" targetRef="Event_1nncojt" />
+      <bpmn:scriptTask id="Activity_14vbhdq" name="Log catch message" scriptFormat="groovy">
+        <bpmn:incoming>Flow_1xszl14</bpmn:incoming>
+        <bpmn:outgoing>Flow_00natt2</bpmn:outgoing>
+        <bpmn:script>println "I caught the error.."
+println "error code " + execution.getVariable("errorCode");
+println "error message " + execution.getVariable("errorMsg");
+
+</bpmn:script>
+      </bpmn:scriptTask>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmn:error id="Error_1wsthg8" name="myErrorEvent" errorCode="myErrorEventCode" camunda:errorMessage="I am an error. Catch me please." />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="errorEvents">
+      <bpmndi:BPMNEdge id="Flow_109timj_di" bpmnElement="Flow_109timj">
+        <di:waypoint x="208" y="150" />
+        <di:waypoint x="290" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ltcg1f_di" bpmnElement="Flow_0ltcg1f">
+        <di:waypoint x="390" y="150" />
+        <di:waypoint x="492" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="172" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="179" y="175" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1u6z02b_di" bpmnElement="Event_110fbbz">
+        <dc:Bounds x="492" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="478" y="175" width="66" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ijjl6o_di" bpmnElement="Activity_1d6hyof">
+        <dc:Bounds x="290" y="110" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01hoao5_di" bpmnElement="Activity_18t51uk" isExpanded="true">
+        <dc:Bounds x="165" y="250" width="455" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1xszl14_di" bpmnElement="Flow_1xszl14">
+        <di:waypoint x="241" y="350" />
+        <di:waypoint x="330" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00natt2_di" bpmnElement="Flow_00natt2">
+        <di:waypoint x="430" y="350" />
+        <di:waypoint x="512" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1ucnu3t_di" bpmnElement="Event_1tr99v5">
+        <dc:Bounds x="205" y="332" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="195" y="375" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1nncojt_di" bpmnElement="Event_1nncojt">
+        <dc:Bounds x="512" y="332" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="520" y="375" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06mbxs1_di" bpmnElement="Activity_14vbhdq">
+        <dc:Bounds x="330" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
