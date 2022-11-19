@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1pyhzo9" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="timerEventProcess" name="Timer Event Process" isExecutable="true">
+    <bpmn:endEvent id="Event_02xg7vo">
+      <bpmn:incoming>Flow_0gc9u62</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1veli55" sourceRef="Activity_1tnzbez" targetRef="Activity_1uptlub" />
+    <bpmn:endEvent id="Event_0bweet7">
+      <bpmn:incoming>Flow_0dy9gbb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0dy9gbb" sourceRef="Activity_0nkdjpf" targetRef="Event_0bweet7" />
+    <bpmn:scriptTask id="Activity_1tnzbez" name="serve dinner" scriptFormat="groovy">
+      <bpmn:incoming>Flow_01pp8d8</bpmn:incoming>
+      <bpmn:outgoing>Flow_1veli55</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1gd5320</bpmn:outgoing>
+      <bpmn:script>println "serve dinner...";</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0nkdjpf" name="serve desserts" scriptFormat="groovy">
+      <bpmn:incoming>Flow_1l7fga5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dy9gbb</bpmn:outgoing>
+      <bpmn:script>println "serve desserts..."</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_01pp8d8" sourceRef="StartEvent_1" targetRef="Activity_1tnzbez" />
+    <bpmn:sequenceFlow id="Flow_0gc9u62" sourceRef="Activity_1uptlub" targetRef="Event_02xg7vo" />
+    <bpmn:scriptTask id="Activity_1uptlub" name="ending dinner" scriptFormat="groovy">
+      <bpmn:incoming>Flow_1veli55</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gc9u62</bpmn:outgoing>
+      <bpmn:script>println " dinner ending.."</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:startEvent id="StartEvent_1" name="Timer start">
+      <bpmn:outgoing>Flow_01pp8d8</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_16smfdw">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R3/PT10S</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1gd5320" sourceRef="Activity_1tnzbez" targetRef="Event_15zddaw" />
+    <bpmn:sequenceFlow id="Flow_1l7fga5" sourceRef="Event_15zddaw" targetRef="Activity_0nkdjpf" />
+    <bpmn:intermediateCatchEvent id="Event_15zddaw">
+      <bpmn:incoming>Flow_1gd5320</bpmn:incoming>
+      <bpmn:outgoing>Flow_1l7fga5</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0pw7sos">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="timerEventProcess">
+      <bpmndi:BPMNEdge id="Flow_1veli55_di" bpmnElement="Flow_1veli55">
+        <di:waypoint x="410" y="120" />
+        <di:waypoint x="470" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dy9gbb_di" bpmnElement="Flow_0dy9gbb">
+        <di:waypoint x="410" y="350" />
+        <di:waypoint x="572" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01pp8d8_di" bpmnElement="Flow_01pp8d8">
+        <di:waypoint x="198" y="120" />
+        <di:waypoint x="310" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gc9u62_di" bpmnElement="Flow_0gc9u62">
+        <di:waypoint x="570" y="120" />
+        <di:waypoint x="642" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gd5320_di" bpmnElement="Flow_1gd5320">
+        <di:waypoint x="360" y="160" />
+        <di:waypoint x="360" y="212" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1l7fga5_di" bpmnElement="Flow_1l7fga5">
+        <di:waypoint x="360" y="248" />
+        <di:waypoint x="360" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0l6luy4_di" bpmnElement="Activity_1tnzbez">
+        <dc:Bounds x="310" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_02xg7vo_di" bpmnElement="Event_02xg7vo">
+        <dc:Bounds x="642" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fnalwj_di" bpmnElement="Activity_1uptlub">
+        <dc:Bounds x="470" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1rmmvwd_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="162" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="155" y="145" width="51" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0bweet7_di" bpmnElement="Event_0bweet7">
+        <dc:Bounds x="572" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03dc6w9_di" bpmnElement="Activity_0nkdjpf">
+        <dc:Bounds x="310" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1k994oz_di" bpmnElement="Event_15zddaw">
+        <dc:Bounds x="342" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
